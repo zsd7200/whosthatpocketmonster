@@ -1,0 +1,70 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    background: linear-gradient(#D1545B 0, #D1545B 47.5%, #000000 47.5%, #000000 52.5%, #DFE0ED 52.5%, #DFE0ED 100%);
+    background-attachment: fixed;
+}
+
+canvas {
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+}
+
+#content {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#controls {
+    margin-left: 30px;
+    padding: 30px 20px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#controls h3 {
+    margin-top: 20px;
+}
+
+#guess {
+    transition: .2s;
+}
+
+#wrong-mon {
+    color: #D1545B;
+}
+
+.correct {
+    box-shadow: 0 0 0.5em green;
+}
+
+.error {
+    animation: shake 0.2s ease-in-out 0s 2;
+    box-shadow: 0 0 0.5em red;
+}
+
+@keyframes shake {
+    0% { margin-left: 0rem; }
+    25% { margin-left: 0.5rem; }
+    75% { margin-left: -0.5rem; }
+    100% { margin-left: 0rem; }
+}
+
+@media only screen and (max-width: 900px) {
+    #content {
+        flex-direction: column;
+    }
+    
+    #controls {
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+}

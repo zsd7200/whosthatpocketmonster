@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Who's that Pokemon?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <script src="https://unpkg.com/string-similarity@4.0.1/umd/string-similarity.min.js"></script>
+    <script src="assets/js/game.js"></script>
+</head>
+<body>
+    <div id="content">
+        <canvas id="mon" width="500" height="500"></canvas>
+
+        <div id="controls">
+            <form id="mode-form" name="modeForm">
+                <input type="radio" id="mode0" name="mode" checked><label for="mode0">Silhouette Mode</label>
+                <input type="radio" id="mode1" name="mode"><label for="mode1">Random Part Mode</label>
+            </form>
+            
+            <form id="gen-form" name="genForm">
+                <input type="checkbox" id="gen1" name="gen1" checked><label for="gen1">Gen 1</label>
+                <input type="checkbox" id="gen2" name="gen2" checked><label for="gen2">Gen 2</label>
+                <input type="checkbox" id="gen3" name="gen3" checked><label for="gen3">Gen 3</label>
+                <input type="checkbox" id="gen4" name="gen4" checked><label for="gen4">Gen 4</label>
+                <input type="checkbox" id="gen5" name="gen5" checked><label for="gen5">Gen 5</label>
+                <input type="checkbox" id="gen6" name="gen6" checked><label for="gen6">Gen 6</label>
+                <input type="checkbox" id="gen7" name="gen7" checked><label for="gen7">Gen 7</label>
+                <input type="checkbox" id="gen8" name="gen8" checked><label for="gen8">Gen 8</label>
+            </form>
+            
+            <form id="forms-form" name="formsForm">
+                <input type="checkbox" id="mega" name="mega" checked><label for="mega">Megas</label>
+                <input type="checkbox" id="gmax" name="gmax" checked><label for="gmax">G-Max</label>
+                <input type="checkbox" id="alola" name="alola" checked><label for="alola">Alolan Forms</label>
+                <input type="checkbox" id="galar" name="galar" checked><label for="galar">Galarian Forms</label>
+            </form>
+
+            <br>
+
+            <input id="guess" type="text"></input>
+            <button id="enter">Enter Guess</button>
+            <button id="new-mon">New Mon</button>
+            
+            <h3>Score: <span id="score-display">0</span></h3>
+            <h3>Guesses Left: <span id="guesses-left">5</span></h3>
+            
+            <div id="game-over" hidden>
+                <h2>Game over!</h2>
+                <h3>You failed on: <span id="wrong-mon"></span>.</h3>
+                <button id="play-again">Play again?</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
