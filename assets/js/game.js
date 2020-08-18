@@ -1,5 +1,7 @@
 window.onload = () => {
     // get dom elements and make some variables
+    let monMobile = document.querySelector("#mon-mobile");
+    let mobileContainer = document.querySelector("#mobile-container");
     let canvas = document.querySelector("#mon");
     let ctx = canvas.getContext("2d");
     let input = document.querySelector("#guess");
@@ -42,6 +44,20 @@ window.onload = () => {
     
     // helper function to get a random int
     let rand = (num) => { return Math.floor(Math.random() * num); }
+    
+    // helper func to determine if the device is mobile using userAgent
+    let isMobile = () => {
+        if( navigator.userAgent.match(/Android/i)
+         || navigator.userAgent.match(/webOS/i)
+         || navigator.userAgent.match(/iPhone/i)
+         || navigator.userAgent.match(/iPad/i)
+         || navigator.userAgent.match(/iPod/i)
+         || navigator.userAgent.match(/BlackBerry/i)
+         || navigator.userAgent.match(/Windows Phone/i))
+            return true;
+        else
+            return false;
+    };
     
     // func to remove special characters
     let formatString = (str) => { 
@@ -101,12 +117,30 @@ window.onload = () => {
         while (transparencyCheck(sx, sy) === false);
     };
     
+    // handle random part mode when using an img instead of a canvas
+    // TODO: try to figure out a way to get a random part that is not super transparent
+    //       because as of now it just scales the center of the image
+    let randomCropMobile = (img) => {
+        img.style.transform = "scale(5)";
+    };
+    
     // gets random image
     let randomImg = (imgsArr, imgsPath) => {
-        // create new img and get random number
-        let img = document.createElement("img");
+        // check if mobile
+        const isMobileRes = isMobile();
+        
+        // if using mobile, use the mobile element rather than create a new one
+        let img = (isMobileRes) ? monMobile : document.createElement("img");
+        
+        // more necessary variables
         let randGen = rand(imgsArr.length);
         let randMon, loop = false, formArr = [];
+        
+        // swap visibility of canvas and mobile container
+        if(isMobileRes && mobileContainer.hidden) {
+            canvas.hidden = true;
+            mobileContainer.hidden = false;
+        }
         
         // make sure there's at least one checkbox selected before rerolling
         for(let i = 0; i < genModifiers.length; i++) {
@@ -165,21 +199,33 @@ window.onload = () => {
         
         // wait for image to load and draw it
         img.onload = () => {
-            // clear canvas first
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // clear canvas first (if applicable)
+            if(!isMobileRes)
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             // change draw mode based on radio buttons
             if(mode === "0") {
-                ctx.filter = "brightness(0%)";
-                scaleToFit(img);
+                if(isMobileRes)
+                    img.classList.add("silhouette");
+                else {
+                    ctx.filter = "brightness(0%)";
+                    scaleToFit(img);
+                }
+                
             } else {
-                ctx.filter = "brightness(100%)";
-                randomCrop(img);
+                if(isMobileRes) {
+                    img.classList.remove("silhouette");
+                    randomCropMobile(img);
+                } else {
+                    ctx.filter = "brightness(100%)";
+                    randomCrop(img);
+                }
             }
         };
         
         // focus input
-        input.focus();
+        if(!isMobileRes)
+            input.focus();
     };
     
     let submitGuess = () => {
@@ -218,7 +264,8 @@ window.onload = () => {
         
         // reset input and focus
         input.value = "";
-        input.focus();
+        if(!isMobile())
+            input.focus();
         
         // display score and guesses left
         scoreDisp.innerHTML = score;
@@ -246,7 +293,9 @@ window.onload = () => {
         scoreDisp.innerHTML = score;
         guessesDisp.innerHTML = guessesLeft;
         
-        input.focus();
+        if(!isMobile())
+            input.focus();
+        
         randomImg(images, imagesPath);
     };
     

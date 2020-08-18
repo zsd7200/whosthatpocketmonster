@@ -12,13 +12,17 @@
 <body>
     <div id="content">
         <canvas id="mon" width="500" height="500"></canvas>
+        <div id="mobile-container" hidden>
+            <img id="mon-mobile" src="assets/img/gen1/Bulbasaur.png" alt="Pokemon">
+        </div>
+
 
         <div id="controls">
             <form id="mode-form" name="modeForm">
                 <input type="radio" id="mode0" name="mode" checked><label for="mode0">Silhouette Mode</label>
                 <input type="radio" id="mode1" name="mode"><label for="mode1">Random Part Mode</label>
             </form>
-            
+                        
             <form id="gen-form" name="genForm">
                 <input type="checkbox" id="gen1" name="gen1" checked><label for="gen1">Gen 1</label>
                 <input type="checkbox" id="gen2" name="gen2" checked><label for="gen2">Gen 2</label>
