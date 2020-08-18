@@ -121,7 +121,8 @@ window.onload = () => {
     // TODO: try to figure out a way to get a random part that is not super transparent
     //       because as of now it just scales the center of the image
     let randomCropMobile = (img) => {
-        img.style.transform = "scale(5)";
+        if(img.style.transform === "scale(1)")
+            img.style.transform = "scale(5)";
     };
     
     // gets random image
@@ -205,8 +206,14 @@ window.onload = () => {
             
             // change draw mode based on radio buttons
             if(mode === "0") {
-                if(isMobileRes)
+                if(isMobileRes) {
+                    img.style.visibility = "hidden";
+                    img.style.transform = "scale(1)";
                     img.classList.add("silhouette");
+                    setTimeout(() => {
+                        img.style.visibility = "visible";
+                    }, 50);
+                }
                 else {
                     ctx.filter = "brightness(0%)";
                     scaleToFit(img);
@@ -214,8 +221,12 @@ window.onload = () => {
                 
             } else {
                 if(isMobileRes) {
-                    img.classList.remove("silhouette");
+                    img.style.visibility = "hidden";
                     randomCropMobile(img);
+                    img.classList.remove("silhouette");
+                    setTimeout(() => {
+                        img.style.visibility = "visible";
+                    }, 50);
                 } else {
                     ctx.filter = "brightness(100%)";
                     randomCrop(img);
