@@ -31,10 +31,23 @@ canvas, #mobile-container {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
+#mobile-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
 #mon-mobile {
     width: 500px;
     height: 500px;
     transform: scale(1);
+}
+
+#window {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    z-index: 10;
 }
 
 #controls h3 { margin-top: 20px; }
