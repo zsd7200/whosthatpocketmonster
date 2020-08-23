@@ -138,9 +138,8 @@ window.onload = () => {
         let randMon, loop = false, formArr = [];
         
         // swap visibility of canvas and mobile container
-        if(isMobileRes && mobileContainer.hidden) {
-            canvas.hidden = true;
-            mobileContainer.hidden = false;
+        if(isMobileRes) {
+            canvas.style.display = "none";
             mobileContainer.style.display = "flex";
         }
         
