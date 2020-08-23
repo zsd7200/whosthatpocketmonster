@@ -141,6 +141,7 @@ window.onload = () => {
         if(isMobileRes && mobileContainer.hidden) {
             canvas.hidden = true;
             mobileContainer.hidden = false;
+            mobileContainer.style.display = "flex";
         }
         
         // make sure there's at least one checkbox selected before rerolling
