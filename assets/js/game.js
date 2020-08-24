@@ -268,8 +268,15 @@ window.onload = () => {
             
             // decrement guesses
             guessesLeft--;
-            if(guessesLeft === 0) {
-                gameOver();
+            switch(guessesLeft) {
+                case 0:
+                    gameOver();
+                    break;
+                case 1:
+                    newMon.disabled = true;
+                    break;
+                default:
+                    break;
             }
         }
         
@@ -288,7 +295,6 @@ window.onload = () => {
         gameOverDisp.hidden = false;
         input.disabled = true;
         enter.disabled = true;
-        newMon.disabled = true;
         wrongMon.innerHTML = pkmnName;
         playAgain.focus();
     };
@@ -320,10 +326,17 @@ window.onload = () => {
     newMon.onclick = () => { 
         guessesLeft--; 
         guessesDisp.innerHTML = guessesLeft;
-        if(guessesLeft === 0) {
-            gameOver();
-        } else {
-            randomImg(images, imagesPath);
+        switch(guessesLeft) {
+            case 0:
+                gameOver();
+                break;
+            case 1:
+                newMon.disabled = true;
+                randomImg(images, imagesPath);
+                break;
+            default:
+                randomImg(images, imagesPath);
+                break;
         }
     };
     
