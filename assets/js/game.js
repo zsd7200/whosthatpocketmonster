@@ -275,6 +275,7 @@ window.onload = () => {
         
         // reset input and focus
         input.value = "";
+        input.placeholder = "";
         if(!isMobile())
             input.focus();
         
@@ -347,4 +348,15 @@ window.onload = () => {
     // add onchange handlers for checkboxes
     for(let i = 0; i < genModifiers.length; i++) { genModifiers[i].onchange = resetGame; }
     for(let key in formModifiers) { formModifiers[key].onchange = resetGame; }
+    
+    // return any pokemon name as a placeholder
+    let getPlaceholder = () => {
+        let randGen = rand(images.length);
+        let randMon = rand(images[randGen].length);
+        
+        return images[randGen][randMon].split('.png')[0];
+    };
+    
+    // set a placeholder
+    input.placeholder = getPlaceholder();
 };
