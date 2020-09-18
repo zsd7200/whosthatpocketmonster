@@ -1,6 +1,7 @@
 window.onload = () => {
     // get dom elements and make some variables
     let monMobile = document.querySelector("#mon-mobile");
+    let monDesktop = document.createElement("img");
     let mobileContainer = document.querySelector("#mobile-container");
     let canvas = document.querySelector("#mon");
     let ctx = canvas.getContext("2d");
@@ -92,6 +93,7 @@ window.onload = () => {
         let y = (canvas.height / 2) - (img.height / 2) * scale;
         
         ctx.scale(1, 1);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     };
     
@@ -127,11 +129,9 @@ window.onload = () => {
     
     // gets random image
     let randomImg = (imgsArr, imgsPath) => {
-        // check if mobile
+        // check if mobile and select element accordingly
         const isMobileRes = isMobile();
-        
-        // if using mobile, use the mobile element rather than create a new one
-        let img = (isMobileRes) ? monMobile : document.createElement("img");
+        let img = (isMobileRes) ? monMobile : monDesktop;
         
         // more necessary variables
         let randGen = rand(imgsArr.length);
@@ -239,6 +239,21 @@ window.onload = () => {
             input.focus();
     };
     
+    let showMon = () => {
+        // check if mobile and select element accordingly
+        const isMobileRes = isMobile();
+        let img = (isMobileRes) ? monMobile : monDesktop;
+        
+        // remove silhoutte class if mobile, otherwise
+        // change ctx filter
+        if(isMobileRes) {
+            img.classList.remove("silhouette");
+        } else {
+            ctx.filter = "brightness(100%)";
+            scaleToFit(img);
+        }
+    };
+    
     let submitGuess = () => {
         // if input value is nothing, then don't do anything
         if(input.value === "") {
@@ -248,23 +263,23 @@ window.onload = () => {
         // use string-similarity to be a bit more lax with
         // spell-checking names
         if(stringSimilarity.compareTwoStrings(formatString(input.value), formattedName) > 0.5) {
-            let img = randomImg(images, imagesPath);
+            // show mon and increment score
+            showMon();
             score++;
             
-            // green box around text box
+            // green box around text box, then get a new mon
             input.classList.add("correct");
             setTimeout(() => {
                 input.classList.remove("correct");
-            }, 400);
+                randomImg(images, imagesPath);
+            }, 750);
             
-        } else {
-            //console.log(pkmnName);
-            
+        } else {           
             // shake text box
             input.classList.add("error");
             setTimeout(() => {
                 input.classList.remove("error");
-            }, 500);
+            }, 200);
             
             // decrement guesses
             guessesLeft--;
@@ -296,6 +311,7 @@ window.onload = () => {
         input.disabled = true;
         enter.disabled = true;
         wrongMon.innerHTML = pkmnName;
+        showMon();
         playAgain.focus();
     };
     

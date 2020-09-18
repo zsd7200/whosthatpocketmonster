@@ -3,6 +3,7 @@
 window.onload = function () {
   // get dom elements and make some variables
   var monMobile = document.querySelector("#mon-mobile");
+  var monDesktop = document.createElement("img");
   var mobileContainer = document.querySelector("#mobile-container");
   var canvas = document.querySelector("#mon");
   var ctx = canvas.getContext("2d");
@@ -72,6 +73,7 @@ window.onload = function () {
     var x = canvas.width / 2 - img.width / 2 * scale;
     var y = canvas.height / 2 - img.height / 2 * scale;
     ctx.scale(1, 1);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
   }; // get a random part of the image to crop (random part mode)
 
@@ -102,10 +104,9 @@ window.onload = function () {
 
 
   var randomImg = function randomImg(imgsArr, imgsPath) {
-    // check if mobile
-    var isMobileRes = isMobile(); // if using mobile, use the mobile element rather than create a new one
-
-    var img = isMobileRes ? monMobile : document.createElement("img"); // more necessary variables
+    // check if mobile and select element accordingly
+    var isMobileRes = isMobile();
+    var img = isMobileRes ? monMobile : monDesktop; // more necessary variables
 
     var randGen = rand(imgsArr.length);
     var randMon,
@@ -189,6 +190,20 @@ window.onload = function () {
     if (!isMobileRes) input.focus();
   };
 
+  var showMon = function showMon() {
+    // check if mobile and select element accordingly
+    var isMobileRes = isMobile();
+    var img = isMobileRes ? monMobile : monDesktop; // remove silhoutte class if mobile, otherwise
+    // change ctx filter
+
+    if (isMobileRes) {
+      img.classList.remove("silhouette");
+    } else {
+      ctx.filter = "brightness(100%)";
+      scaleToFit(img);
+    }
+  };
+
   var submitGuess = function submitGuess() {
     // if input value is nothing, then don't do anything
     if (input.value === "") {
@@ -198,20 +213,21 @@ window.onload = function () {
 
 
     if (stringSimilarity.compareTwoStrings(formatString(input.value), formattedName) > 0.5) {
-      var img = randomImg(images, imagesPath);
-      score++; // green box around text box
+      // show mon and increment score
+      showMon();
+      score++; // green box around text box, then get a new mon
 
       input.classList.add("correct");
       setTimeout(function () {
         input.classList.remove("correct");
-      }, 400);
+        randomImg(images, imagesPath);
+      }, 750);
     } else {
-      //console.log(pkmnName);
       // shake text box
       input.classList.add("error");
       setTimeout(function () {
         input.classList.remove("error");
-      }, 500); // decrement guesses
+      }, 200); // decrement guesses
 
       guessesLeft--;
 
@@ -243,6 +259,7 @@ window.onload = function () {
     input.disabled = true;
     enter.disabled = true;
     wrongMon.innerHTML = pkmnName;
+    showMon();
     playAgain.focus();
   };
 
