@@ -319,7 +319,11 @@ window.onload = function () {
   var getPlaceholder = function getPlaceholder() {
     var randGen = rand(images.length);
     var randMon = rand(images[randGen].length);
-    return images[randGen][randMon].split('.webp')[0];
+    var str = images[randGen][randMon].split('.webp')[0]; // there's a handful of pokemon that have underscores in their filenames,
+    // so we replace that with an underscore here
+
+    str = str.replace("_", " ");
+    return str;
   }; // set a placeholder
 
 

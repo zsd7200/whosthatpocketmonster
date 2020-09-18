@@ -11,11 +11,23 @@ html, body {
     background-attachment: fixed;
 }
 
-canvas, #mobile-container {
+a {
+    transition: .5s;
+    
+    &:link { color: black; }
+    &:visited { color: black; }
+    &:hover { color: darkgray; }
+    &:active { color: lightgray; }
+}
+
+canvas, #mobile-container, #err {
     border: 2px solid rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5);
     padding: 10px;
+}
+
+canvas, #mobile-container {
     overflow: hidden;
     min-width: 500px;
     min-height: 500px;
@@ -40,6 +52,32 @@ canvas, #mobile-container {
     }
 }
 
+#err {
+    position: absolute;
+    text-align: center;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    h1, h3 {
+        margin-top: 0;
+        margin-bottom: 4px;
+    }
+    
+    h1 { font-size: 48pt; }
+    h3 { font-size: 24pt; }
+}
+
+#footer{
+    position: fixed;
+    text-align: right;
+    bottom: 0;
+    left: 75%;
+    width: 24%;
+    font-size: 9pt;
+}
+
 #mobile-container {
     display: none;
     flex-direction: column;
@@ -59,6 +97,7 @@ canvas, #mobile-container {
     z-index: 10;
 }
 
+
 #guess { transition: .2s; }
 #wrong-mon { color: #D1545B; }
 
@@ -76,4 +115,5 @@ canvas, #mobile-container {
 @media only screen and (max-width: 1000px) {
     #content { flex-direction: column; }
     #controls { margin-left: 0px; margin-top: 20px; }
+    #footer { display: none; }
 }
