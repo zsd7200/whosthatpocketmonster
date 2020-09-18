@@ -1,0 +1,79 @@
+$pokeball-red: #D1545B;
+$pokeball-grey: #DFE0ED;
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    background: linear-gradient($pokeball-red 0, $pokeball-red 47.5%, #000000 47.5%, #000000 52.5%, $pokeball-grey 52.5%, $pokeball-grey 100%);
+    background-attachment: fixed;
+}
+
+canvas, #mobile-container {
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    overflow: hidden;
+    min-width: 500px;
+    min-height: 500px;
+}
+
+#content {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#controls {
+    margin-left: 30px;
+    padding: 30px 20px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    
+    h3 {
+        margin-top: 20px;
+    }
+}
+
+#mobile-container {
+    display: none;
+    flex-direction: column;
+    position: relative;
+}
+
+#mon-mobile {
+    width: 500px;
+    height: 500px;
+    transform: scale(1);
+}
+
+#window {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    z-index: 10;
+}
+
+#guess { transition: .2s; }
+#wrong-mon { color: #D1545B; }
+
+.correct { box-shadow: 0 0 0.75em green; }
+.error { animation: shake 0.2s ease-in-out 0s 2; box-shadow: 0 0 0.5em red; }
+.silhouette { filter: brightness(0%); }
+
+@keyframes shake {
+    0% { margin-left: 0rem; }
+    25% { margin-left: 0.5rem; }
+    75% { margin-left: -0.5rem; }
+    100% { margin-left: 0rem; }
+}
+
+@media only screen and (max-width: 1000px) {
+    #content { flex-direction: column; }
+    #controls { margin-left: 0px; margin-top: 20px; }
+}
