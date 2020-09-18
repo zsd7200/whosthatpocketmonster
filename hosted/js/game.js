@@ -164,9 +164,7 @@ window.onload = function () {
         if (isMobileRes) {
           img.style.transform = "scale(1)";
           img.classList.add("silhouette");
-          setTimeout(function () {
-            img.style.visibility = "visible";
-          }, 50);
+          img.style.visibility = "visible";
         } else {
           ctx.filter = "brightness(0%)";
           scaleToFit(img);
@@ -175,9 +173,7 @@ window.onload = function () {
         if (isMobileRes) {
           randomCropMobile(img);
           img.classList.remove("silhouette");
-          setTimeout(function () {
-            img.style.visibility = "visible";
-          }, 50);
+          img.style.visibility = "visible";
         } else {
           ctx.filter = "brightness(100%)";
           randomCrop(img);

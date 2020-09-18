@@ -212,9 +212,7 @@ window.onload = () => {
                 if(isMobileRes) {
                     img.style.transform = "scale(1)";
                     img.classList.add("silhouette");
-                    setTimeout(() => {
-                        img.style.visibility = "visible";
-                    }, 50);
+                    img.style.visibility = "visible";
                 }
                 else {
                     ctx.filter = "brightness(0%)";
@@ -225,9 +223,7 @@ window.onload = () => {
                 if(isMobileRes) {
                     randomCropMobile(img);
                     img.classList.remove("silhouette");
-                    setTimeout(() => {
-                        img.style.visibility = "visible";
-                    }, 50);
+                    img.style.visibility = "visible";
                 } else {
                     ctx.filter = "brightness(100%)";
                     randomCrop(img);
