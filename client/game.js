@@ -249,6 +249,7 @@ window.onload = () => {
         // change ctx filter
         if(isMobileRes) {
             img.classList.remove("silhouette");
+            img.style.transform = "scale(1)";
         } else {
             ctx.filter = "brightness(100%)";
             scaleToFit(img);
