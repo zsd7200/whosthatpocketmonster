@@ -198,6 +198,9 @@ window.onload = () => {
         pkmnName = imgsArr[randGen][randMon].split('.webp')[0];
         formattedName = formatString(pkmnName);
         
+        if(isMobileRes)
+            img.style.visibility = "hidden";
+        
         // wait for image to load and draw it
         img.onload = () => {
             // clear canvas first (if applicable)
@@ -207,12 +210,11 @@ window.onload = () => {
             // change draw mode based on radio buttons
             if(mode === "0") {
                 if(isMobileRes) {
-                    img.style.visibility = "hidden";
                     img.style.transform = "scale(1)";
                     img.classList.add("silhouette");
                     setTimeout(() => {
                         img.style.visibility = "visible";
-                    }, 100);
+                    }, 50);
                 }
                 else {
                     ctx.filter = "brightness(0%)";
@@ -221,7 +223,6 @@ window.onload = () => {
                 
             } else {
                 if(isMobileRes) {
-                    img.style.visibility = "hidden";
                     randomCropMobile(img);
                     img.classList.remove("silhouette");
                     setTimeout(() => {
