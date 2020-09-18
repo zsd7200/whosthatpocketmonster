@@ -212,7 +212,7 @@ window.onload = () => {
                     img.classList.add("silhouette");
                     setTimeout(() => {
                         img.style.visibility = "visible";
-                    }, 50);
+                    }, 100);
                 }
                 else {
                     ctx.filter = "brightness(0%)";

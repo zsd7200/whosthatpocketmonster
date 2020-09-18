@@ -166,7 +166,7 @@ window.onload = function () {
           img.classList.add("silhouette");
           setTimeout(function () {
             img.style.visibility = "visible";
-          }, 50);
+          }, 100);
         } else {
           ctx.filter = "brightness(0%)";
           scaleToFit(img);
