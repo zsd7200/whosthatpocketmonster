@@ -15,6 +15,8 @@ window.onload = function () {
   var guessesDisp = document.querySelector("#guesses-left");
   var gameOverDisp = document.querySelector("#game-over");
   var wrongMon = document.querySelector("#wrong-mon");
+  var pass = document.querySelector("#pass");
+  var passedMon = document.querySelector("#passed-mon");
   var playAgain = document.querySelector("#play-again");
   var genModifiers = [document.querySelector("#gen1"), document.querySelector("#gen2"), document.querySelector("#gen3"), document.querySelector("#gen4"), document.querySelector("#gen5"), document.querySelector("#gen6"), document.querySelector("#gen7"), document.querySelector("#gen8")];
   var formModifiers = {
@@ -281,21 +283,27 @@ window.onload = function () {
   newMon.onclick = function () {
     guessesLeft--;
     guessesDisp.innerHTML = guessesLeft;
+    showMon();
+    passedMon.innerHTML = pkmnName;
+    pass.hidden = false;
+    setTimeout(function () {
+      switch (guessesLeft) {
+        case 0:
+          gameOver();
+          break;
 
-    switch (guessesLeft) {
-      case 0:
-        gameOver();
-        break;
+        case 1:
+          newMon.disabled = true;
+          randomImg(images, imagesPath);
+          break;
 
-      case 1:
-        newMon.disabled = true;
-        randomImg(images, imagesPath);
-        break;
+        default:
+          randomImg(images, imagesPath);
+          break;
+      }
 
-      default:
-        randomImg(images, imagesPath);
-        break;
-    }
+      pass.hidden = true;
+    }, 1250);
   }; // add support for enter on input
 
 

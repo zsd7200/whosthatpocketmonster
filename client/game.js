@@ -13,6 +13,8 @@ window.onload = () => {
     let guessesDisp = document.querySelector("#guesses-left");
     let gameOverDisp = document.querySelector("#game-over");
     let wrongMon = document.querySelector("#wrong-mon");
+    let pass = document.querySelector("#pass");
+    let passedMon = document.querySelector("#passed-mon");
     let playAgain = document.querySelector("#play-again");
     let genModifiers = [
         document.querySelector("#gen1"),
@@ -340,18 +342,27 @@ window.onload = () => {
     newMon.onclick = () => { 
         guessesLeft--; 
         guessesDisp.innerHTML = guessesLeft;
-        switch(guessesLeft) {
-            case 0:
-                gameOver();
-                break;
-            case 1:
-                newMon.disabled = true;
-                randomImg(images, imagesPath);
-                break;
-            default:
-                randomImg(images, imagesPath);
-                break;
-        }
+        
+        showMon();
+        passedMon.innerHTML = pkmnName;
+        pass.hidden = false;
+        
+        setTimeout(() => {
+            switch(guessesLeft) {
+                case 0:
+                    gameOver();
+                    break;
+                case 1:
+                    newMon.disabled = true;
+                    randomImg(images, imagesPath);
+                    break;
+                default:
+                    randomImg(images, imagesPath);
+                    break;
+            }
+            
+            pass.hidden = true;
+        }, 1250);
     };
     
     // add support for enter on input

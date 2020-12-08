@@ -86,7 +86,7 @@ canvas, #mobile-container {
 #guess {
   transition: .2s; }
 
-#wrong-mon {
+#wrong-mon, #passed-mon {
   color: #D1545B; }
 
 .correct {

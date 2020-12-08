@@ -99,7 +99,7 @@ canvas, #mobile-container {
 
 
 #guess { transition: .2s; }
-#wrong-mon { color: #D1545B; }
+#wrong-mon, #passed-mon { color: #D1545B; }
 
 .correct { box-shadow: 0 0 0.75em green; }
 .error { animation: shake 0.2s ease-in-out 0s 2; box-shadow: 0 0 0.5em red; }
