@@ -82,8 +82,65 @@ window.onload = function () {
 
   var randomCrop = function randomCrop(img) {
     // need to determine where to draw that isn't going to be at least 30% transparent
-    var transparencyCheck = function transparencyCheck(x, y) {
-      if (ctx.getImageData(x, y, 150, 150).data[3] === 0 || ctx.getImageData(x + 100, y + 100, 150, 150).data[3] === 0) return false;else return true;
+    var transparencyCheck = function transparencyCheck() {
+      var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      if (ctx.getImageData(x, y, 150, 150).data[3] === 0 || ctx.getImageData(x + 100, y + 100, 150, 150).data[3] === 0) return true;else return false;
+    };
+
+    var similarityCheck = function similarityCheck() {
+      var r = [];
+      var g = [];
+      var b = [];
+      var range = 25;
+      var x = [0, 250, 499];
+      var y = [[0, 100, 0], [450, 350, 450]];
+      var data,
+          totalTrue = 0,
+          rAvg = 0,
+          gAvg = 0,
+          bAvg = 0; // loop for y, as y has top array [0] and bottom array [1]
+      // reset avg values
+
+      for (var i = 0; i < y.length; i++) {
+        rAvg = 0;
+        gAvg = 0;
+        bAvg = 0; // fill rgb arrays
+
+        for (var j = 0; j < x.length; j++) {
+          data = ctx.getImageData(x[j], y[i][j], 1, 1).data;
+          r[j] = data[0];
+          g[j] = data[1];
+          b[j] = data[2];
+          rAvg += r[j];
+          gAvg += g[j];
+          bAvg += b[j];
+        } // find averages
+
+
+        rAvg /= r.length;
+        gAvg /= g.length;
+        bAvg /= b.length; // find if average is similar to rgb values
+
+        for (var _j = 0; _j < r.length; _j++) {
+          if (r[_j] - range <= rAvg && r[_j] + range >= rAvg && g[_j] - range <= gAvg && g[_j] + range >= gAvg && b[_j] - range <= bAvg && b[_j] + range >= bAvg) totalTrue++;else {
+            /*
+            console.log("y: " + i);
+            console.log("j: " + j);
+            console.log("r[j]: " + r[j]);
+            console.log("g[j]: " + g[j]);
+            console.log("b[j]: " + b[j]);
+            console.log("rAvg: " + rAvg);
+            console.log("gAvg: " + gAvg);
+            console.log("bAvg: " + bAvg);
+            console.log("----------");
+            */
+          }
+        }
+      } // reroll if conditions are met
+
+
+      if (totalTrue >= 4 || totalTrue >= 3 && rand(3) == 1) return true;else return false;
     }; // create variables for locaiton on image
 
 
@@ -94,7 +151,7 @@ window.onload = function () {
       sy = rand(img.height - 100);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, sx, sy, 100, 100, 0, 0, 500, 500);
-    } while (transparencyCheck(sx, sy) === false);
+    } while (transparencyCheck() || similarityCheck());
   }; // handle random part mode when using an img instead of a canvas
   // TODO: try to figure out a way to get a random part that is not super transparent
   //       because as of now it just scales the center of the image

@@ -102,11 +102,73 @@ window.onload = () => {
     // get a random part of the image to crop (random part mode)
     let randomCrop = (img) => {
         // need to determine where to draw that isn't going to be at least 30% transparent
-        let transparencyCheck = (x, y) => {
+        let transparencyCheck = (x = 0, y = 0) => {            
             if(ctx.getImageData(x, y, 150, 150).data[3] === 0 || ctx.getImageData(x + 100, y + 100, 150, 150).data[3] === 0 )
-                return false;
-            else
                 return true;
+            else
+                return false;
+        };
+        
+        let similarityCheck = () => {            
+            let r = [];
+            let g = [];
+            let b = [];
+            const range = 25;
+            const x = [0, 250, 499];
+            const y = [[0, 100, 0], [450, 350, 450]];
+            let data, totalTrue = 0, rAvg = 0, gAvg = 0, bAvg = 0;
+
+            // loop for y, as y has top array [0] and bottom array [1]
+            // reset avg values
+            for(let i = 0; i < y.length; i++) {
+                rAvg = 0;
+                gAvg = 0;
+                bAvg = 0;
+                
+                // fill rgb arrays
+                for (let j = 0; j < x.length; j++) {
+                    data = ctx.getImageData(x[j], y[i][j], 1, 1).data;                
+                    r[j] = data[0];
+                    g[j] = data[1];
+                    b[j] = data[2];
+                    
+                    rAvg += r[j];
+                    gAvg += g[j];
+                    bAvg += b[j];
+                }
+                
+                // find averages
+                rAvg /= r.length;
+                gAvg /= g.length;
+                bAvg /= b.length;
+                
+                // find if average is similar to rgb values
+                for(let j = 0; j < r.length; j++) {
+                    if(((r[j] - range) <= rAvg && (r[j] + range) >= rAvg) &&
+                       ((g[j] - range) <= gAvg && (g[j] + range) >= gAvg) &&
+                       ((b[j] - range) <= bAvg && (b[j] + range) >= bAvg))
+                                totalTrue++;
+                    else {
+                        /*
+                        console.log("y: " + i);
+                        console.log("j: " + j);
+                        console.log("r[j]: " + r[j]);
+                        console.log("g[j]: " + g[j]);
+                        console.log("b[j]: " + b[j]);
+                        console.log("rAvg: " + rAvg);
+                        console.log("gAvg: " + gAvg);
+                        console.log("bAvg: " + bAvg);
+                        console.log("----------");
+                        */
+                    }
+                }
+            }
+            
+            // reroll if conditions are met
+            if(totalTrue >= 4 || (totalTrue >= 3 && rand(3) == 1))
+                return true;
+            else
+                return false;
         };
         
         // create variables for locaiton on image
@@ -118,7 +180,7 @@ window.onload = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, sx, sy, 100, 100, 0, 0, 500, 500);
         }
-        while (transparencyCheck(sx, sy) === false);
+        while (transparencyCheck() || similarityCheck());
     };
     
     // handle random part mode when using an img instead of a canvas
