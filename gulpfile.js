@@ -75,7 +75,7 @@ const watch = () => {
 };
 
 // export scripts for use in package.json
-module.exports.build = gulp.parallel(cssTask, jsTask, lintTask, webpTask);
+module.exports.build = gulp.series(gulp.parallel(cssTask, jsTask, lintTask), webpTask);
 module.exports.watch = watch;
 module.exports.js = jsTask;
 module.exports.css = cssTask;
