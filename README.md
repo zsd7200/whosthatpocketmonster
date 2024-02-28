@@ -1,7 +1,7 @@
 # [whosthatpocket.monster](http://whosthatpocket.monster/)
 "Who's that Pokemon?" web game
 
-Also available to play on [whosthatpocketmonster.herokuapp.com](https://whosthatpocketmonster.herokuapp.com).
+Also available to play on [https://pocket-monster-17fe6181b418.herokuapp.com/](https://pocket-monster-17fe6181b418.herokuapp.com/).
 
 ## Install
 To install and run the server locally run these commands:
